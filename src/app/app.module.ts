@@ -7,20 +7,25 @@ import 'hammerjs';
 import { QuestionDetailComponent } from './question-detail/question-detail.component';
 import { MomentModule } from 'angular2-moment';
 import { AnswerFormComponent } from './answer-form/answer-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SigninScreenComponent } from './signin-screen/signin-screen.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionDetailComponent,
-    AnswerFormComponent
+    AnswerFormComponent,
+    SigninScreenComponent,
+    SignupFormComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     MomentModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
