@@ -6,5 +6,13 @@
       <input matInput placeholder="Descripcion" name="description" ngModel>
     </mat-form-field>
     <button mat-raised-button color="primary">Enviar</button>
-
+    <mat-grid-list cols="3" rowHeight="100px">
+      <mat-grid-tile>
+        <i mat-list-icon class="material-icons">help</i>
+        <small>Sin icono</small>
+      </mat-grid-tile>
+      <mat-grid-tile *ngFor="let icon of icons">
+        <i mat-list-icon class="devicon-{{ icon.name }}-{{ getIconVersion(icon) }}"></i>
+      </mat-grid-tile>
+    </mat-grid-list>
   </form>

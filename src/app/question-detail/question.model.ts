@@ -4,7 +4,7 @@ export class Question {
     title: String;
     description: String;
     createdAt?: Date;
-    icon?: String;
+    icon?: any;
     answers: Answer[];
 
     constructor(title:String,description:String,createdAt?: Date, icon?: string){
