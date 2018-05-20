@@ -1,5 +1,5 @@
 <mat-list>
-    <mat-list-item *ngFor="let question of questions">
+    <mat-list-item *ngFor="let question of questions" [routerLink]="['questions',question._id]">
       <i mat-list-icon *ngIf="question.icon === 'none'" class="material-icons" id="help">help</i>
       <i mat-list-icon *ngIf="question.icon !== 'none'" class="{{question.icon}}"></i>
 
@@ -8,3 +8,4 @@
 
     </mat-list-item>
 </mat-list>
+<button mat-fab color="primary" class="add-question" [routerLink]="['questions/new']">+</button>

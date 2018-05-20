@@ -12,6 +12,7 @@ import { SigninScreenComponent } from './signin-screen/signin-screen.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
+import { Routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { QuestionFormComponent } from './question-form/question-form.component';
     MaterialModule,
     MomentModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Routing
   ],
   providers: [],
   bootstrap: [AppComponent]

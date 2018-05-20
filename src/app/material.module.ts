@@ -15,6 +15,7 @@ const modules =   [
     MatButtonModule,
     MatListModule,
     MatGridListModule,
+    MatRadioModule,
     MatRadioModule
 
   ] 
