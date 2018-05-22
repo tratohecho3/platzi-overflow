@@ -7,5 +7,5 @@ const debug = new Debug('platzi-overflow:root')
 
 
 app.listen(PORT, () => {
-  debug(`Server running at port ${PORT}`)
+  debug(`Server running at por ${PORT}`)
 })
