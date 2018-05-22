@@ -6,7 +6,7 @@ const question = {
     title: 'Como hago para imprimir un string',
     description: 'Tengo una duda...',
     createdAt: new Date(),
-    icon: 'devicon-android-plan',
+    icon: 'devicon-android-plain',
     answers: [],
     user: {
         firstName: 'Sasha',

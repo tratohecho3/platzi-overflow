@@ -3,7 +3,7 @@ import { Question } from '../question-detail/question.model';
 import { Http } from '@angular/http'; 
 import { environment } from '../../environments/environment';
 import urljoin from 'url-join';
-import { join } from 'path';
+
 
 @Injectable({
   providedIn: 'root'

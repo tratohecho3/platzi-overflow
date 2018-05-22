@@ -13,6 +13,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import { Routing } from './app.routing';
+import { QuestionService } from './services/question.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,10 @@ import { Routing } from './app.routing';
     MomentModule,
     FormsModule,
     ReactiveFormsModule,
-    Routing
+    Routing,
+    HttpModule
   ],
-  providers: [],
+  providers: [QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
