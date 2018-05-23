@@ -30,7 +30,7 @@ app.get('/:id', (req,res) => {
 
 app.post('/', (req,res) => {
     const question = req.body;
-    question.id =  +new Date();
+    question._id =  +new Date();
     question.user = {
         firstName: 'Pedro',
         lastName: 'Peres',
