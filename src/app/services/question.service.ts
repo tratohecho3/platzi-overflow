@@ -21,12 +21,12 @@ export class QuestionService {
           .catch(this.handleError);
   }
 
-  getQuestion(id): Promise<void | Question>{
-    const url = urljoin(this.questionsUrl,id)
+  getQuestion(id): Promise<void | Question> {
+    const url = urljoin(this.questionsUrl, id);
     return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Question)
-            .catch(this.handleError)
+            .catch(this.handleError);
   }
 
   handleError(error: any){
