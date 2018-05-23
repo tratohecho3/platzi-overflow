@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Question } from '../question-detail/question.model';
-import { Http } from '@angular/http'; 
+import { Http, Headers } from '@angular/http'; 
 import { environment } from '../../environments/environment';
 import urljoin from 'url-join';
-
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,14 @@ export class QuestionService {
             .toPromise()
             .then(response => response.json() as Question)
             .catch(this.handleError);
+  }
+
+  addQuestion(question: Question){
+    const body = JSON.stringify(question);
+    const headers = new Headers({'Content-Type': 'application/json'});
+
+    return this.http.post(this.questionsUrl, body, { headers })
+    .pipe(map((response) => response.json()), catchError((error: Response) => Observable.throw(error.json())));
   }
 
   handleError(error: any){
