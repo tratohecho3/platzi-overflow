@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import urljoin from 'url-join';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Answer } from '../answer-form/answer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,15 @@ export class QuestionService {
 
     return this.http.post(this.questionsUrl, body, { headers })
     .pipe(map((response) => response.json()), catchError((error: Response) => Observable.throw(error.json())));
-  }
 
+  }
+  addAnswer(answer: Answer){
+    const body = JSON.stringify(answer);
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const url = urljoin(this.questionsUrl,answer.question._id.toString(), 'answers')
+    return this.http.post(url, body, { headers })
+    .pipe(map((response) => response.json()), catchError((error: Response) => Observable.throw(error.json())));
+  }
   handleError(error: any){
     const errMsg = error.message ? error.message :
                   error.status ? `${error.status} - ${error.statusText}` : 'Server error'

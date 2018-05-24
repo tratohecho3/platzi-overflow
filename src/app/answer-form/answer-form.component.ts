@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Answer } from './answer.model';
 import { Question } from '../question-detail/question.model';
 import { User } from '../signin-screen/user.model';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-answer-form',
@@ -11,7 +12,7 @@ import { User } from '../signin-screen/user.model';
 })
 export class AnswerFormComponent implements OnInit {
   @Input() question: Question;
-  constructor() { }
+  constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
   }
@@ -20,10 +21,14 @@ export class AnswerFormComponent implements OnInit {
   onSubmit(form: NgForm){
     const answer = new Answer(
       form.value.description,
-      this.question,
-      new Date(),
-      new User(null,null,'Paula','Becerra'));
-    this.question.answers.unshift(answer);
+      this.question);
+    this.questionService.addAnswer(answer)
+      .subscribe( 
+        a => this.question.answers.unshift(a),
+        error => console.log(error)
+
+    );
+      
     form.reset();
   }
 
