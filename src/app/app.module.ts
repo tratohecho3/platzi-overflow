@@ -16,6 +16,7 @@ import { Routing } from './app.routing';
 import { QuestionService } from './services/question.service';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AuthService } from './services/auth.service';
     FormsModule,
     ReactiveFormsModule,
     Routing,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   providers: [QuestionService,AuthService],
   bootstrap: [AppComponent]
