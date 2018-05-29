@@ -26,6 +26,7 @@ app.post('/signin', (req, res, next) => {
 
 
   const token = jwt.sign({ user }, secret, { expiresIn: 86400 })
+
   res.status(200).json({
     message: 'Login succeded',
     token,
@@ -43,7 +44,6 @@ function createToken(user){
 }
 
 app.post('/signup', (req,res) => {
-  console.log('entre')
   const { firstName, lastName, email, password } = req.body;
   const user = {
     _id : +new Date(),
@@ -58,6 +58,7 @@ app.post('/signup', (req,res) => {
   const token = createToken(user);
   res.status(201).json({
     message: 'User saved',
+    token,
     userId: user._id,
     firstName,
     lastName,

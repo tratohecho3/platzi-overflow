@@ -2,14 +2,10 @@ import express from 'express'
 import {
   required,
   questionMiddleware,
-  questionsMiddleware
+  questionsMiddleware,
+  questions
 } from '../middlewares'
 const app = express.Router()
-
-
-
-
-
 
 
 // GET /api/questions
@@ -21,7 +17,7 @@ app.get('/:id', questionMiddleware, (req, res) => {
 })
 
 // POST /api/questions
-app.post('/', required, (req, res) => {
+app.post('/', required,questionsMiddleware, (req, res) => {
   const question = req.body
   question._id = +new Date()
   question.user = req.user
