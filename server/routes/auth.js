@@ -2,7 +2,7 @@ import express from 'express'
 import Debug from 'debug'
 import jwt from 'jsonwebtoken'
 import { secret } from '../config'
-import { findUserByEmail, users} from '../middlewares'
+import { User } from '../models'
 
 const app = express.Router()
 const debug = new Debug('platzi-overflow:auth')
@@ -11,22 +11,21 @@ function comparePasswords(providedPassword, userPassword) {
   return providedPassword === userPassword
 }
 
-app.post('/signin', (req, res, next) => {
+app.post('/signin', async (req, res, next) => {
   const { email, password } = req.body
-  const user = findUserByEmail(email)
+  const user = await User.findOne({ email })
 
   if (!user) {
     debug(`User with email ${email} not found`)
     return handleLoginFailed(res)
   }
+
   if (!comparePasswords(password, user.password)) {
     debug(`Passwords do not match: ${password} !== ${user.password}`)
-    return handleLoginFailed(res, 'El correo y la password no coinciden')
+    return handleLoginFailed(res, 'El correo y la contraseña no coinciden')
   }
 
-
-  const token = jwt.sign({ user }, secret, { expiresIn: 86400 })
-
+  const token = createToken(user)
   res.status(200).json({
     message: 'Login succeded',
     token,
@@ -37,25 +36,20 @@ app.post('/signin', (req, res, next) => {
   })
 })
 
-function createToken(user){
-  const token = jwt.sign({ user }, secret, { expiresIn: 86400 })
-  return token
+const createToken = (user) => jwt.sign({ user }, secret, { expiresIn: 86400 })
 
-}
-
-app.post('/signup', (req,res) => {
-  const { firstName, lastName, email, password } = req.body;
-  const user = {
-    _id : +new Date(),
+app.post('/signup', async (req, res) => {
+  const { firstName, lastName, email, password } = req.body
+  console.log(firstName)
+  const u = new User({
     firstName,
     lastName,
     email,
     password
-  };
-  debug(`Creating new user ${user}`);
-  
-  users.push(user);
-  const token = createToken(user);
+  })
+  debug(`Creating new user: ${user}`)
+  const user = await u.save()
+  const token = createToken(user)
   res.status(201).json({
     message: 'User saved',
     token,
@@ -67,10 +61,10 @@ app.post('/signup', (req,res) => {
 })
 
 function handleLoginFailed(res, message) {
+  return res.status(401).json({
+    message: 'Login failed',
+    error: message || 'Email and password don\'t match'
+  })
+}
 
-    return res.status(401).json({
-      message: 'Login failed',
-      error: message || 'Email and password don\'t match'
-    })
-  }
 export default app

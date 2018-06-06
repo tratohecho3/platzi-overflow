@@ -1,24 +1,42 @@
 import express from 'express'
-import {
-  required,
-  questionMiddleware,
-  questionsMiddleware,
-  questions
-} from '../middlewares'
+import { required } from '../middlewares'
+import { question } from '../db-api'
+import { handleError} from '../utils'
 const app = express.Router()
 
-
 // GET /api/questions
-app.get('/', questionsMiddleware,(req, res) => res.status(200).json(req.questions))
+app.get('/', async (req, res) => {
+  console.log('entre en el backend2')
+  try {
+    console.log('entre en el backend')
+    const questions = await question.findAll()
+    console.log('entre en el backend posterior')
+    
+    res.status(200).json(questions)
+  } catch (error) {
+    console.log('entre en el backend3')
+    handleError(error,res)
+
+  }
+})
 
 // GET /api/questions/:id
-app.get('/:id', questionMiddleware, (req, res) => {
-  res.status(200).json(req.question)
+app.get('/:id', async (req, res) => {
+
+  try {
+    const q = await question.findById(req.params.id)
+    res.status(200).json(q)
+
+  } catch (error) {
+    handleError(error,res)
+  }
+
 })
 
 // POST /api/questions
-app.post('/', required,questionsMiddleware, (req, res) => {
+app.post('/', required, (req, res) => {
   const question = req.body
+
   question._id = +new Date()
   question.user = req.user
   question.createdAt = new Date()
@@ -27,7 +45,7 @@ app.post('/', required,questionsMiddleware, (req, res) => {
   res.status(201).json(question)
 })
 
-app.post('/:id/answers',required, questionMiddleware, (req, res) => {
+app.post('/:id/answers', required, (req, res) => {
   const answer = req.body
   const q = req.question
   answer.createdAt = new Date()

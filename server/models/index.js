@@ -1,3 +1,3 @@
-export { defualt as User} from './user'
-export { defualt as Answer} from './answer' 
-export { defualt as Question} from './question' 
+export { default as User } from './user'
+export { default as Answer } from './answer'
+export { default as Question } from './question'
