@@ -6,15 +6,15 @@ const app = express.Router()
 
 // GET /api/questions
 app.get('/', async (req, res) => {
-  console.log('entre en el backend2')
+
   try {
     console.log('entre en el backend')
     const questions = await question.findAll()
-    console.log('entre en el backend posterior')
+
     
     res.status(200).json(questions)
   } catch (error) {
-    console.log('entre en el backend3')
+
     handleError(error,res)
 
   }

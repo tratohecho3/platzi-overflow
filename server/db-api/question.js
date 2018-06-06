@@ -6,7 +6,7 @@ const debug = new Debug('platzi-overflow:db-api:question')
 export default {
   findAll: async () => {
     debug('Finding all questions')
-    console.log('lo intento')
+
     return await Question.find().populate('answers')
   },
   findById: async (_id) => {
