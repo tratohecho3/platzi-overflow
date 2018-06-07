@@ -17,6 +17,7 @@ import { QuestionService } from './services/question.service';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { QuestionScreenComponent } from './question-screen/question-screen.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     SigninScreenComponent,
     SignupFormComponent,
     QuestionListComponent,
-    QuestionFormComponent
+    QuestionFormComponent,
+    QuestionScreenComponent
   ],
   imports: [
     BrowserModule,
