@@ -1,7 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import { question, auth } from './routes'
-
+import path from 'path'
 const app = express()
 
 app.use(bodyParser.json())
@@ -15,6 +15,11 @@ if (process.env.NODE_ENV === 'development') {
     next()
   })
 }
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(process.cwd(),'dist')))
+}
+
 
 app.use('/api/questions', question);
 app.use('/api/auth',auth);
