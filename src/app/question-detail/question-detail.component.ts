@@ -21,7 +21,8 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         .then((question: Question) => {
           this.question = question;
           this.loading = false;
-
+          console.log(question)
+          console.log('en detalle')
 
         });
     });

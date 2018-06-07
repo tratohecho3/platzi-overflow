@@ -1,29 +1,40 @@
 import Debug from 'debug'
-import { Question } from '../models'
+import { Question, Answer } from '../models'
 
 const debug = new Debug('platzi-overflow:db-api:question')
 
 export default {
-  findAll: async () => {
+  findAll: () => {
     debug('Finding all questions')
-
-    return await Question.find().populate('answers')
+    return Question.find().populate('answers')
   },
-  findById: async (_id) => {
-    debug(`Finding question by Id ${id}`);
-    return await Question
-      .findOne({_id})
+
+  findById: (_id) => {
+    debug(`Find question with id ${_id}`)
+    return Question
+      .findOne({ _id })
       .populate('user')
       .populate({
         path: 'answers',
-        options: {sort:'-createdAt'},
+        options: { sort: '-createdAt' },
         populate: {
           path: 'user',
           model: 'User'
         }
-      
       })
-      
+  },
 
+  create: (q) => {
+    debug(`Creating new question ${q}`)
+    const question = new Question(q)
+    return question.save()
+  },
+
+  createAnswer: async (q, a) => {
+    const answer = new Answer(a)
+    const savedAnswer = await answer.save()
+    q.answers.push(savedAnswer)
+    await q.save()
+    return savedAnswer
   }
 }

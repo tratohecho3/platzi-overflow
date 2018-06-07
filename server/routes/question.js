@@ -1,57 +1,59 @@
 import express from 'express'
-import { required } from '../middlewares'
+import { required, questionMiddleware } from '../middlewares'
 import { question } from '../db-api'
-import { handleError} from '../utils'
+import { handleError } from '../utils'
+import { User } from '../models'
 const app = express.Router()
 
 // GET /api/questions
 app.get('/', async (req, res) => {
-
   try {
-    console.log('entre en el backend')
     const questions = await question.findAll()
-
-    
     res.status(200).json(questions)
   } catch (error) {
-
-    handleError(error,res)
-
+    handleError(error, res)
   }
 })
 
 // GET /api/questions/:id
-app.get('/:id', async (req, res) => {
-
+app.get('/:id', questionMiddleware, async (req, res) => {
   try {
-    const q = await question.findById(req.params.id)
-    res.status(200).json(q)
-
+    console.log(req.question)
+    res.status(200).json(req.question)
   } catch (error) {
-    handleError(error,res)
+    handleError(error, res)
   }
-
 })
 
 // POST /api/questions
-app.post('/', required, (req, res) => {
-  const question = req.body
+app.post('/', required, async (req, res) => {
+  const { title, description, icon } = req.body
+  const q = {
+    title,
+    description,
+    icon,
+    user: req.user._id
+  }
 
-  question._id = +new Date()
-  question.user = req.user
-  question.createdAt = new Date()
-  question.answers = []
-  questions.push(question)
-  res.status(201).json(question)
+  try {
+    const savedQuestion = await question.create(q)
+    res.status(201).json(savedQuestion)
+  } catch (error) {
+    handleError(error, res)
+  }
 })
 
-app.post('/:id/answers', required, (req, res) => {
-  const answer = req.body
+app.post('/:id/answers', required, questionMiddleware, async (req, res) => {
+  const a = req.body
   const q = req.question
-  answer.createdAt = new Date()
-  answer.user = req.user
-  q.answers.push(answer)
-  res.status(201).json(answer)
+  a.createdAt = new Date()
+  a.user = new User(req.user)
+  try {
+    const savedAnswer = await question.createAnswer(q, a)
+    res.status(201).json(savedAnswer)
+  } catch (error) {
+    handleError(error, res)
+  }
 })
 
 export default app

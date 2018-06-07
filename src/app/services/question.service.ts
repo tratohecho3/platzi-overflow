@@ -51,7 +51,7 @@ export class QuestionService {
       question: {
         _id: answer.question._id
       }
-    }
+    } 
     const body = JSON.stringify(a);
     const headers = new Headers({'Content-Type': 'application/json'});
     const url = urljoin(this.questionsUrl,answer.question._id.toString(), 'answers')+ this.getToken();
