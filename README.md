@@ -2,6 +2,8 @@
 Final link(Please open in Firefox, the last time I realized there is a bug in Google Chrome but I stopped giving support to this app)
 https://fast-crag-54971.herokuapp.com/
 
+For a better experience open at your cellphone with Firefox
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
 ## Development server
